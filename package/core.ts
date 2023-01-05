@@ -44,6 +44,7 @@ const defaultConfig: IConfig = {
   style: {
     minWidth: "120px",
     // minHeight: "60px",
+    // width: "fit-content",
   },
 };
 
@@ -120,7 +121,31 @@ const initDom = (pos: Pos) => {
     })
   );
 
-  patch(contextmenuEle!, vNode);
+  const v = patch(contextmenuEle!, vNode);
+  const offsetW = (v.elm as HTMLElement).offsetWidth;
+  const offsetH = (v.elm as HTMLElement).offsetHeight;
+  console.log(offsetW, offsetH);
+  const maxW = document.documentElement.clientWidth;
+  const maxH = document.documentElement.clientHeight;
+  console.log(maxW - pos.x - offsetW);
+  console.log(maxH - pos.y - offsetH);
+
+  if (pos.x + offsetW > maxW && pos.y + offsetH > maxH) {
+    initDom({
+      x: maxW - offsetW,
+      y: maxH - offsetH,
+    });
+  } else if (pos.y + offsetH > maxH) {
+    initDom({
+      x: pos.x,
+      y: maxH - offsetH,
+    });
+  } else if (pos.x + offsetW > maxW) {
+    initDom({
+      x: maxW - offsetW,
+      y: pos.y,
+    });
+  }
 };
 
 const event = () => {
