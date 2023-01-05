@@ -19,7 +19,7 @@ interface IItemConfig {
 
 interface IConfig {
   className?: string;
-  list: string[] | IItemConfig[];
+  list?: string[] | IItemConfig[];
   style?: Record<string, string>;
   itemConfig?: Omit<IItemConfig, "text">;
 }
@@ -31,16 +31,23 @@ interface Pos {
 
 const defaultConfig: IConfig = {
   className: "kaijiaContextmenu",
-  list: [],
+  list: [
+    {
+      text: "点击查看案例",
+      on: {
+        click: () => {
+          window.open("https://www.baidu.com");
+        },
+      },
+    },
+  ],
   style: {
     minWidth: "120px",
-    minHeight: "60px",
+    // minHeight: "60px",
   },
 };
 
-let globalConfig: IConfig = {
-  list: ["kaijia contextmenu"],
-};
+let globalConfig: IConfig = {};
 
 const initDom = (pos: Pos) => {
   const className = globalConfig.className;
@@ -77,7 +84,7 @@ const initDom = (pos: Pos) => {
         ...globalConfig.style,
       },
     },
-    globalConfig.list.map(item => {
+    globalConfig.list!.map(item => {
       const itemConfig = item as IItemConfig;
       return h(
         "div",
@@ -134,13 +141,13 @@ const initContextmenu = (config?: IConfig) => {
     // @ts-ignore
     globalConfig[key] = globalConfig[key] ?? defaultConfig[key];
   });
-  globalConfig.list.forEach((item, index) => {
+  globalConfig.list!.forEach((item, index) => {
     if (typeof item === "string") {
-      globalConfig.list[index] = Object.assign({}, globalConfig.itemConfig, {
+      globalConfig.list![index] = Object.assign({}, globalConfig.itemConfig, {
         text: item,
       });
     } else {
-      globalConfig.list[index] = Object.assign(
+      globalConfig.list![index] = Object.assign(
         {},
         globalConfig.itemConfig,
         item
