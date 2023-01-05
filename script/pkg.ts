@@ -8,7 +8,7 @@ const main = () => {
   if (!existsSync(pkgPath)) throw `${pkgPath}不存在`;
   const pkg = JSON.parse(readFileSync(pkgPath).toString());
   delete pkg.devDependencies;
-  delete pkg.dependencies;
+  // delete pkg.dependencies;
   delete pkg.scripts;
   pkg.main = "kaijia-contextmenu.mjs";
   pkg.exports = {

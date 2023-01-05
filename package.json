@@ -5,16 +5,17 @@
   "main": "index.js",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && npm run build:types && npm run cp:pkg",
+    "build": "vite build && npm run build:types && npm run update:version && npm run cp:pkg",
     "build:types": "tsc -p tsconfig.types.json",
-    "cp:pkg": "ts-node ./script/pkg.ts"
+    "cp:pkg": "ts-node ./script/pkg.ts",
+    "update:version": "ts-node ./script/updateVersion.ts"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kaijia323/kaijia-contextmenu.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "kaijia323",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/kaijia323/kaijia-contextmenu/issues"
