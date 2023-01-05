@@ -124,11 +124,8 @@ const initDom = (pos: Pos) => {
   const v = patch(contextmenuEle!, vNode);
   const offsetW = (v.elm as HTMLElement).offsetWidth;
   const offsetH = (v.elm as HTMLElement).offsetHeight;
-  console.log(offsetW, offsetH);
   const maxW = document.documentElement.clientWidth;
   const maxH = document.documentElement.clientHeight;
-  console.log(maxW - pos.x - offsetW);
-  console.log(maxH - pos.y - offsetH);
 
   if (pos.x + offsetW > maxW && pos.y + offsetH > maxH) {
     initDom({
