@@ -91,7 +91,11 @@ const initDom = (pos: Pos) => {
         {
           on: {
             ...itemConfig.on,
-            mousedown: e => e.stopPropagation(),
+            mousedown: e => {
+              if (e.button == 2) {
+                e.stopPropagation();
+              }
+            },
             mouseenter: e =>
               ((e.target! as HTMLElement).style.backgroundColor =
                 itemConfig.style?.hoverColor ?? "rgba(0, 0, 0, 0.2)"),
