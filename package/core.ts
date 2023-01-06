@@ -8,11 +8,19 @@ import {
 } from "snabbdom";
 import type { On } from "snabbdom";
 
+interface IClickParams {
+  event: MouseEvent;
+  // 当前响应contextmenu事件的元素，即右键点击的元素
+  context: HTMLElement;
+  // 当前菜单的配置
+  config: IItemConfig;
+}
+
 interface IItemConfig {
   text: string;
   className?: string;
   on?: Omit<On, "click"> & {
-    click: (e: MouseEvent, contextmenuEle: HTMLElement) => void;
+    click: (params: IClickParams) => void;
   };
   style?: Record<string, string> & {
     hoverColor: string;
@@ -102,7 +110,11 @@ const initDom = (pos: Pos) => {
             ...itemConfig.on,
             click: e => {
               if (itemConfig.on?.click) {
-                itemConfig.on.click(e, currentContextmenu!);
+                itemConfig.on.click({
+                  event: e,
+                  context: currentContextmenu!,
+                  config: itemConfig,
+                });
               }
             },
             mouseenter: e =>
