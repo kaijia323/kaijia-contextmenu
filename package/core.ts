@@ -33,10 +33,10 @@ const defaultConfig: IConfig = {
   className: "kaijiaContextmenu",
   list: [
     {
-      text: "点击查看案例",
+      text: "查看源码",
       on: {
         click: () => {
-          window.open("https://www.baidu.com");
+          window.open("https://github.com/kaijia323/kaijia-contextmenu#readme");
         },
       },
     },
