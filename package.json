@@ -9,9 +9,9 @@
     "build:types": "tsc -p tsconfig.types.json",
     "cp:pkg": "ts-node ./script/pkg.ts",
     "update:version": "ts-node ./script/updateVersion.ts",
-    "git:commit": "npm run update:version && npm run cp:pkg && ts-node ./script/gitCommit.ts",
     "npm:publish": "ts-node ./script/publish.ts",
-    "auto": "npm run build && npm run git:commit && npm run npm:publish"
+    "auto": "npm run build && npm run update:version && npm run cp:pkg && npm run npm:publish",
+    "push:github": "ts-node ./script/pushGithub.ts"
   },
   "repository": {
     "type": "git",
