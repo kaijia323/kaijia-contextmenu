@@ -154,17 +154,9 @@ initContextmenu({
 })
 ```
 
-## IItemConfig 和 IClickParams
+## IItemConfig
 
 ```typescript
-interface IClickParams {
-  event: MouseEvent;
-  // 当前响应contextmenu事件的元素，即右键点击的元素
-  context: HTMLElement;
-  // 当前菜单的配置
-  config: IItemConfig;
-}
-
 interface IItemConfig {
   text: string;
   className?: string;
@@ -189,8 +181,20 @@ interface IItemConfig {
 
 `dom`事件
 
-**注：考虑到`click`事件用的较多，所以单独对 `click` 事件做了处理，参数是 `IClickParams`**
+**注：考虑到`click`事件用的较多，所以单独对 `click` 事件做了处理，参数是 [IClickParams](#IClickParams)**
 
 ### style?: Record<string, string> & { hoverColor: string }
 
 菜单的样式
+
+### IClickParams
+
+```typescript
+interface IClickParams {
+  event: MouseEvent;
+  // 当前响应contextmenu事件的元素，即右键点击的元素
+  context: HTMLElement;
+  // 当前菜单的配置
+  config: IItemConfig;
+}
+```
