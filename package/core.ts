@@ -47,7 +47,10 @@ const defaultConfig: IConfig = {
   style: {
     minWidth: "160px",
     padding: "4px",
-    backgroundColor: "#51C4D3",
+    // backgroundColor: "#51C4D3",
+    backgroundColor: "rgb(81, 196, 211, 0.6)",
+    // 毛玻璃效果
+    backdropFilter: "blur(5px)",
     color: "#fff",
     fontSize: "12px",
     userSelect: "none",
