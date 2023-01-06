@@ -14,7 +14,10 @@
     "type": "git",
     "url": "git+https://github.com/kaijia323/kaijia-contextmenu.git"
   },
-  "keywords": [],
+  "keywords": [
+    "自定义浏览器右键菜单",
+    "右键菜单"
+  ],
   "author": "kaijia323",
   "license": "ISC",
   "bugs": {
