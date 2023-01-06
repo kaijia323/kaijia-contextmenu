@@ -177,7 +177,7 @@ interface IItemConfig {
 
 菜单的类名
 
-### on?: Omit<On, "click"> & { click: (e: MouseEvent, contextmenuEle: HTMLElement) => void }
+### on?: Omit<On, "click"> & { click: (params: IClickParams) => void }
 
 `dom`事件
 
