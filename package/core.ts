@@ -20,7 +20,7 @@ interface IItemConfig {
 }
 
 interface IConfig {
-  el?: HTMLElement;
+  el?: HTMLElement | HTMLElement[];
   className?: string;
   list?: string[] | IItemConfig[];
   style?: Record<string, string>;
@@ -154,14 +154,18 @@ const initDom = (pos: Pos) => {
 
 const event = () => {
   const bindEle = globalConfig.el ? globalConfig.el : window;
+
+  const _bindEle = Array.isArray(bindEle) ? bindEle : [bindEle];
   window.addEventListener("click", _ => {
     document.querySelector(`.${globalConfig.className}`)?.remove();
   });
-  bindEle.addEventListener("contextmenu", e => {
-    e.preventDefault();
-    currentContextmenu = e.target as HTMLElement;
-    const { clientX, clientY } = e as MouseEvent;
-    initDom({ x: clientX, y: clientY });
+  _bindEle.forEach(_ => {
+    _.addEventListener("contextmenu", e => {
+      e.preventDefault();
+      currentContextmenu = e.target as HTMLElement;
+      const { clientX, clientY } = e as MouseEvent;
+      initDom({ x: clientX, y: clientY });
+    });
   });
 };
 
