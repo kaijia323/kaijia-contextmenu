@@ -11,7 +11,7 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, "package/core.ts"),
       name: "kaijia-contextmenu",
-      formats: ["es", "cjs"],
+      formats: ["es", "cjs", "umd"],
     },
   },
 });
