@@ -6,8 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>kaijia-contextmenu-demo</title>
     <script src="/index.js" type="module"></script>
+    <style>
+      #app > div {
+        padding: 8px;
+        margin-bottom: 8px;
+        border: 1px solid #eee;
+      }
+    </style>
   </head>
   <body>
     <div id="app"></div>
+    <script>
+      const lists = ["a", "b", "c"];
+      const appEle = document.querySelector("#app");
+      lists.forEach(list => {
+        const ele = document.createElement("div");
+        ele.className = "menu";
+        ele.innerHTML = list;
+        appEle.appendChild(ele);
+      });
+    </script>
   </body>
 </html>

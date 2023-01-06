@@ -11,13 +11,16 @@ import type { On } from "snabbdom";
 interface IItemConfig {
   text: string;
   className?: string;
-  on?: On;
+  on?: Omit<On, "click"> & {
+    click: (e: MouseEvent, contextmenuEle: HTMLElement) => void;
+  };
   style?: Record<string, string> & {
     hoverColor: string;
   };
 }
 
 interface IConfig {
+  el?: HTMLElement;
   className?: string;
   list?: string[] | IItemConfig[];
   style?: Record<string, string>;
@@ -42,13 +45,20 @@ const defaultConfig: IConfig = {
     },
   ],
   style: {
-    minWidth: "120px",
-    // minHeight: "60px",
-    // width: "fit-content",
+    minWidth: "160px",
+    padding: "4px",
+    backgroundColor: "#51C4D3",
+    color: "#fff",
+    fontSize: "12px",
+    userSelect: "none",
+    borderRadius: "6px",
   },
 };
 
 let globalConfig: IConfig = {};
+
+// 当前的 contextmenu
+let currentContextmenu: HTMLElement | null = null;
 
 const initDom = (pos: Pos) => {
   const className = globalConfig.className;
@@ -76,15 +86,10 @@ const initDom = (pos: Pos) => {
         position: "fixed",
         top: `${pos.y}px`,
         left: `${pos.x}px`,
-        padding: "12px 8px",
-        backgroundColor: "#51C4D3",
-        borderRadius: "6px",
-        color: "#fff",
-        fontSize: "12px",
-        userSelect: "none",
         ...globalConfig.style,
       },
     },
+    // 每个菜单
     globalConfig.list!.map(item => {
       const itemConfig = item as IItemConfig;
       return h(
@@ -92,9 +97,9 @@ const initDom = (pos: Pos) => {
         {
           on: {
             ...itemConfig.on,
-            mousedown: e => {
-              if (e.button == 2) {
-                e.stopPropagation();
+            click: e => {
+              if (itemConfig.on?.click) {
+                itemConfig.on.click(e, currentContextmenu!);
               }
             },
             mouseenter: e =>
@@ -112,7 +117,7 @@ const initDom = (pos: Pos) => {
           style: {
             padding: "8px",
             cursor: "pointer",
-            borderRadius: "6px",
+            borderRadius: "4px",
             ...itemConfig.style,
           },
         },
@@ -122,6 +127,7 @@ const initDom = (pos: Pos) => {
   );
 
   const v = patch(contextmenuEle!, vNode);
+  // 边界处理
   const offsetW = (v.elm as HTMLElement).offsetWidth;
   const offsetH = (v.elm as HTMLElement).offsetHeight;
   const maxW = document.documentElement.clientWidth;
@@ -143,20 +149,19 @@ const initDom = (pos: Pos) => {
       y: pos.y,
     });
   }
+  // 边界处理
 };
 
 const event = () => {
-  window.addEventListener("click", e => {
+  const bindEle = globalConfig.el ? globalConfig.el : window;
+  window.addEventListener("click", _ => {
     document.querySelector(`.${globalConfig.className}`)?.remove();
   });
-  window.addEventListener("contextmenu", e => {
+  bindEle.addEventListener("contextmenu", e => {
     e.preventDefault();
-  });
-  window.addEventListener("mousedown", e => {
-    if (e.button == 2) {
-      const { clientX, clientY } = e;
-      initDom({ x: clientX, y: clientY });
-    }
+    currentContextmenu = e.target as HTMLElement;
+    const { clientX, clientY } = e as MouseEvent;
+    initDom({ x: clientX, y: clientY });
   });
 };
 
