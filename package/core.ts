@@ -63,6 +63,7 @@ const defaultConfig: IConfig = {
     fontSize: "12px",
     userSelect: "none",
     borderRadius: "6px",
+    zIndex: "999",
   },
 };
 
