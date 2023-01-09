@@ -1,6 +1,6 @@
 {
   "name": "kaijia-contextmenu",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "自定义浏览器右键菜单",
   "main": "index.js",
   "scripts": {
